@@ -20,13 +20,21 @@ class Account(amount: Long, val name: String) {
         return this.amount
     }
 
+    fun hyundaiCardPayment(card: Card, amount: Long): Long {
+        require(card is HyundaiCard)
+        payment(amount - card.payBack(amount))
+        card.attendHyundaiEvent() // smart casting 됨
+        return this.amount;
+    }
+
     private fun validAmount(amount: Long): Boolean {
         return this.amount >= amount
     }
+
 }
 
 fun main() {
-    val account = Account(1000, "jaejoon");
-    account.payment(1000)
+    val account = Account(1000, "jaejoon")
+    account.hyundaiCardPayment(HyundaiCard(),1000)
     println(account)
 }
